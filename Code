@@ -1,0 +1,24 @@
+import requests
+
+def hava_durumu_goster(sehir):
+    api_key = "59175288bab9e40e1d0190821eda9129"
+    baglanti= "http://api.openweathermap.org/data/2.5/weather"
+    parametreler = {"q": sehir, "appid": api_key, "units": "metric"}
+
+    response = requests.get(baglanti, params=parametreler)
+    if response.status_code == 200:
+        print("Sorgulanıyor")
+        hava_durumu_verisi = response.json()
+        sehir_adı = hava_durumu_verisi['name']
+        sıcaklık = hava_durumu_verisi['main']['temp']
+        durum = hava_durumu_verisi['weather'][0]['description']
+
+        print(f"{sehir_adı} şehrinin hava durumu:")
+        print(f"Sıcaklık: {sıcaklık}°C")
+        print(f"Durum: {durum}")
+    else:
+        print("Hava durumu bilgileri alınamadı.")
+
+if __name__ == "__main__":
+    kullanici_sehri = input("Hava durumu bilgisini görmek istediğiniz şehri girin: ")
+    hava_durumu_goster(kullanici_sehri)
